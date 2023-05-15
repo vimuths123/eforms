@@ -36,3 +36,9 @@ button {
   padding: 0.5rem 1rem;
   font-weight: bold;
 }
+
+.menu_black, .menu_black:hover, .menu_black:active{
+  background-color: #202123 !important;
+}
+
+
