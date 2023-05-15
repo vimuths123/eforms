@@ -12,18 +12,18 @@ const Home = () => {
         <link rel="icon" href="/favicon.ico" />
       </Head>
 
-      <div class="container">
+      <div className="container">
         <Head>
-          
+
         </Head>
-        <div class="row">
-          <div class="col">
+        <div className="row">
+          <div className="col">
             Column
           </div>
-          <div class="col">
+          <div className="col">
             Column
           </div>
-          <div class="col">
+          <div className="col">
             Column
           </div>
         </div>
