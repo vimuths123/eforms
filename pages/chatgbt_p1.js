@@ -1,7 +1,12 @@
 import React from "react";
+import HeaderBar from "../components/header";
 
-const chatgbt_p1 = () => {
-  return <div>chatgbt_p1</div>;
+const ChatgbtP1 = () => {
+  return (
+    <div>
+      <HeaderBar />
+    </div>
+  );
 };
 
-export default chatgbt_p1;
+export default ChatgbtP1;
