@@ -37,11 +37,45 @@ button {
   font-weight: bold;
 }
 
-.menu_black, .menu_black:hover, .menu_black:active{
+.menu_black,
+.menu_black:hover,
+.menu_black:active {
   background-color: #202123 !important;
 }
 
-.background_grey{
+.background_grey {
   background-color: #353541;
 }
 
+.max814 {
+  max-width: 814px;
+}
+
+.search_icon {
+  height: 20px;
+  top: 14px;
+  left: 12px;
+  color: #7E899F;
+}
+
+.home_btn, .home_btn:hover, .home_btn:active{
+  padding: 10px;
+  width: 320px;
+  background-color: #0CA47E !important;
+}
+
+.example_hr{
+  color: #5E5E5F;
+  border-top: 3px solid;
+  width: 40%;
+  margin-top: 11px;
+}
+
+.example_span{
+  width: 20%;
+  color: #8B8B8B;
+}
+
+.dark_gray{
+  background-color: #2A2A36;
+}
