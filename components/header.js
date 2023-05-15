@@ -2,13 +2,14 @@ import React from 'react'
 
 const Header = () => {
     return (
-        <div className='menu_black'>
+        <nav className='menu_black'>
             <div className='container py-3 d-flex justify-content-between'>
                 <h2 className='text-white align-self-center'>Forms.ai</h2>
                 <div className="float-right d-flex justify-content-between">
                     <div class="dropdown">
                         <button
-                            class="btn btn-secondary menu_black border-0 dropdown-toggle text-secondary fw-bold"
+                            class="btn btn-secondary menu_black border-0 dropdown-toggle text-secondary
+                            me-5 mt-1 fw-bold"
                             type="button" id="dropdownMenuButton1" data-bs-toggle="dropdown" aria-expanded="false">
                             Broswe Forms
                         </button>
@@ -21,7 +22,7 @@ const Header = () => {
                     <a className='text-white mt-2'>Sign up / Login</a>
                 </div>
             </div>
-        </div>
+        </nav>
     )
 }
 

@@ -6,24 +6,18 @@ import Header from '../components/header';
 
 const Home = () => {
   return (
-    <div>
+    <div className='background_grey'>
       <Head>
         <title>Create Next App</title>
         <link rel="icon" href="/favicon.ico" />
       </Head>
 
-      <Header/>
+      <Header />
 
       <div className="container">
-        <div className="row">
-          <div className="col">
-            Column
-          </div>
-          <div className="col">
-            Column
-          </div>
-          <div className="col">
-            Column
+        <div class="row">
+          <div class="col text-center">
+            <h1 className='text-white my-5'>What form are you looking to create?</h1>
           </div>
         </div>
       </div>
