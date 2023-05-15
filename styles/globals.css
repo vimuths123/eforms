@@ -4,6 +4,8 @@ body {
   margin: 0;
   font-family: Inter, -apple-system, BlinkMacSystemFont, Segoe UI, Roboto,
     Oxygen, Ubuntu, Cantarell, Fira Sans, Droid Sans, Helvetica Neue, sans-serif;
+    background-color: #353541;
+    color: #fff;
 }
 
 a {
@@ -42,3 +44,44 @@ button {
 }
 
 
+.middle-content-box-1{
+  background-color: #2A2A36;
+  min-height: 750px;
+  margin-bottom:15%;
+}
+
+.middle-content-box-section-1 {
+  background-color: #494659;
+  position: relative;
+}
+
+.middle-content-box-3 {
+  background-color: #494659;
+  position: relative;
+  bottom: 0;
+  left: 0;
+
+}
+.middle-content-box-1 {
+height: 25%;
+}
+
+/* 
+.middle-content-box-2 {
+  height: 75%;
+  } */
+
+.middle-content-box-3 {
+  background-color: #494659 !important;
+  color: #fff;
+  width: 100%;
+  height: 55px;
+
+  }
+
+  #floatingTextarea {
+    background-color: #494659 !important;
+  color: #fff;
+  /* height: 20px; */
+  width: 100%;
+  }
