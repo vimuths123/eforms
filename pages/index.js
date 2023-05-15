@@ -2,6 +2,7 @@ import Head from 'next/head';
 // import styles from '../styles/Home.module.css';
 
 import React from 'react'
+import Header from '../components/header';
 
 const Home = () => {
   return (
@@ -12,6 +13,9 @@ const Home = () => {
       </Head>
 
       <div class="container">
+        <Head>
+          
+        </Head>
         <div class="row">
           <div class="col">
             Column
