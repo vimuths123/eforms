@@ -6,7 +6,7 @@ const SignUp = () => {
     return (
         <div className='background_grey'>
             <Head>
-                <title>Sign In</title>
+                <title>Sign Up</title>
                 <link rel="icon" href="/favicon.ico" />
             </Head>
 
