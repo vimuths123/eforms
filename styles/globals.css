@@ -96,6 +96,10 @@ button {
   max-width: 814px;
 }
 
+.max991 {
+  max-width: 991px;
+}
+
 .search_icon {
   height: 20px;
   top: 14px;
@@ -178,6 +182,38 @@ button {
   color: #8B8B8B;
 }
 
-.paddingt6{
+.paddingt6 {
   padding-top: 6rem !important;
+}
+
+.greenfont {
+  color: #0CA47E
+}
+
+.cardtypes {
+  top: 6px;
+  right: 0px;
+}
+
+.no_top_border {
+  border-top-right-radius: 0px;
+  border-top-left-radius: 0px;
+  border-top: none;
+}
+
+.card_number{
+  border-bottom-right-radius: 0px;
+  border-bottom-left-radius: 0px;
+  /* border-bottom: none; */
+  padding-right: 105px;
+}
+
+.card_expire{
+  border-bottom-right-radius: 0px;
+  border-right: none;
+}
+
+.card_cvv{
+  border-bottom-left-radius: 0px;
+  border-left: none;
 }
