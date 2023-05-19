@@ -72,7 +72,7 @@ const ChatgbtP1 = ({ inputValue, setInputValue, fetchResult, result, loading, er
 
       <div className="container max991">
         <div className="text-center mt-5">
-          <h3 className="lh-lg">Create: { inputValue }</h3>
+          <h3 className="lh-lg">Create: {inputValue}</h3>
           <p className="lh-lg mb-3">
             We’re going to ask you a series of step by step questions to build
             your agreement.
@@ -92,7 +92,7 @@ const ChatgbtP1 = ({ inputValue, setInputValue, fetchResult, result, loading, er
                       </div>
                       <div className="col-11">
                         <p className="text-start">
-                          Great! I will guide you through the process of creating a { inputValue } by asking you a series of questions.
+                          Great! I will guide you through the process of creating a {inputValue} by asking you a series of questions.
                           Please provide accurate and detailed information as you respond
                           to the questions. Once we have collected all the necessary
                           information, I'll help you create the lease agreement. Let's
@@ -100,6 +100,15 @@ const ChatgbtP1 = ({ inputValue, setInputValue, fetchResult, result, loading, er
                         </p>
                       </div>
                     </div>
+                  </div>
+                  <div className="middle-content-box-3 bottom-0 tempmargin">
+                    <textarea
+                      className="form-control"
+                      placeholder="Please type your annswer"
+                      id="floatingTextarea"
+                    >
+                      Please type your annswer
+                    </textarea>
                   </div>
                 </div>
               </div>
