@@ -59,7 +59,7 @@ const ChatgbtP1 = () => {
 
         <div className="middle-content-box-3  m-3">
           <textarea
-            class="form-control"
+            className="form-control"
             placeholder="Please type your annswer"
             id="floatingTextarea"
           >

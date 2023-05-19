@@ -9,7 +9,7 @@ const HomeFooter = () => {
                         <span className='footer_line1'>
                             Templates
                         </span>
-                        <h3 class="mt-3">
+                        <h3 className="mt-3">
                             2,400+
                         </h3>
                     </div>
@@ -17,7 +17,7 @@ const HomeFooter = () => {
                         <span className='footer_line1'>
                             Users
                         </span>
-                        <h3 class="mt-3">
+                        <h3 className="mt-3">
                             1,323,000
                         </h3>
                     </div>
@@ -25,7 +25,7 @@ const HomeFooter = () => {
                         <span className='footer_line1'>
                             Downloads
                         </span>
-                        <h3 class="mt-3">
+                        <h3 className="mt-3">
                             3,454,688
                         </h3>
                     </div>
