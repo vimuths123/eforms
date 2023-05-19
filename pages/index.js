@@ -2,16 +2,43 @@ import Head from 'next/head';
 // import styles from '../styles/Home.module.css';
 
 
-import React from 'react'
+import React, { useEffect, useState } from 'react'
 import Header from '../components/header';
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
 import { faSearch } from '@fortawesome/free-solid-svg-icons';
 import Image from 'next/image';
 import { faAngleRight } from '@fortawesome/free-solid-svg-icons';
 import HomeFooter from '../components/homefooter';
+import react from 'react';
+import { useRouter } from 'next/router';
+import { connect } from 'react-redux';
+import { setInputValue, fetchResult } from '../redux/store';
 
 
-const Home = () => {
+const Home = ({ inputValue, setInputValue, fetchResult, result, loading, error }) => {
+  const [inputQuestion, setInputQuestion] = useState('');
+  const router = useRouter();
+
+
+  const handleQuestionChange = (event) => {
+    setInputQuestion(event.target.value);
+    setInputValue(event.target.value);
+  };
+
+  const handleBeginClick = () => {
+    // console.log(inputQuestion);
+    console.log('Input value:', inputValue);
+
+    // fetchResult(inputValue);
+    fetchResult(inputValue).then(() => {
+      // Check if there is no error and loading is false
+      if (!error && !loading) {
+        // Redirect to another page using useHistory
+        router.push('/chatgbt_p1');
+      }
+    });
+  };
+
   return (
     <div className='background_grey'>
       <Head>
@@ -21,16 +48,21 @@ const Home = () => {
 
       <Header />
 
+      {loading && <div>Loading...</div>}
+      {error && <div>Error: {error}</div>} {/* Update error rendering */}
       <div className="container max814">
         <div className="row">
           <div className="col text-center">
             <h1 className='text-white my-5'>What form are you looking to create?</h1>
             <div className='position-relative'>
               <input type="text" className="form-control lh-lg ps-5"
-                placeholder="Enter the name of a form (e.g., “Oregon Lease Agreement”)" />
+                placeholder="Enter the name of a form (e.g., “Oregon Lease Agreement”)"
+                value={inputQuestion} onChange={handleQuestionChange} />
               <FontAwesomeIcon icon={faSearch} className='position-absolute search_icon' />
             </div>
-            <button type="button" className="btn btn-success my-5 home_btn">
+            <button type="button"
+              className="btn btn-success my-5 home_btn"
+              onClick={handleBeginClick}>
               <span>
                 <Image src="/images/icons/Comment.png" alt="My Image" width={16} height={10} className='me-2' />
                 Begin
@@ -179,9 +211,20 @@ const Home = () => {
         </div>
       </div>
 
-      <HomeFooter/>
+      <HomeFooter />
     </div>
   )
 }
 
-export default Home
+// export default Home
+
+const mapStateToProps = (state) => ({
+  inputValue: state.input.inputValue,
+  result: state.input.result,
+  loading: state.input.loading,
+  error: state.input.error,
+});
+
+const mapDispatchToProps = { setInputValue, fetchResult };
+
+export default connect(mapStateToProps, mapDispatchToProps)(Home);
