@@ -1,6 +1,7 @@
 import { configureStore, createSlice, createAsyncThunk } from '@reduxjs/toolkit';
 import { useDispatch } from 'react-redux';
 import thunk from 'redux-thunk';
+import { setLocalStorage } from '../hooks/setLocalStorage'
 
 const initialState = {
     inputValue: '',
@@ -46,6 +47,7 @@ const fetchResult = createAsyncThunk('input/fetchResult', async (inputValue) => 
             },
         });
         const data = await response.json();
+        
         return data;
     } catch (error) {
         throw new Error('Failed to fetch result');

@@ -13,11 +13,30 @@ import react from 'react';
 import { useRouter } from 'next/router';
 import { connect } from 'react-redux';
 import { setInputValue, fetchResult } from '../redux/store';
+import { setLocalStorage } from '../hooks/setLocalStorage'
+// 
 
 
 const Home = ({ inputValue, setInputValue, fetchResult, result, loading, error }) => {
   const [inputQuestion, setInputQuestion] = useState('');
   const router = useRouter();
+  const [questionCount, setQuestionCount] = useState(0);
+
+  useEffect(() => {
+
+  }, [questionCount])
+
+
+  // const setItems = setLocalStorage('questrionArr');
+  useEffect(() => {
+    if (result) {
+      localStorage.setItem('questrionArr', JSON.stringify(result));
+      localStorage.setItem('qcount', 0);
+      
+      router.push('/chatgbt_p1');
+    }
+  }, [result])
+
 
 
   const handleQuestionChange = (event) => {
@@ -25,19 +44,23 @@ const Home = ({ inputValue, setInputValue, fetchResult, result, loading, error }
     setInputValue(event.target.value);
   };
 
+  // const setItems2 = setLocalStorage('inputValue');
+
   const handleBeginClick = () => {
     // console.log(inputQuestion);
     console.log('Input value:', inputValue);
 
-    // fetchResult(inputValue);
+    localStorage.setItem('inputValue', inputValue);
+
     fetchResult(inputValue).then(() => {
-      // Check if there is no error and loading is false
       if (!error && !loading) {
-        // Redirect to another page using useHistory
-        router.push('/chatgbt_p1');
+
+        // router.push('/chatgbt_p1');
       }
     });
   };
+
+  
 
   return (
     <div className='background_grey'>
@@ -47,6 +70,7 @@ const Home = ({ inputValue, setInputValue, fetchResult, result, loading, error }
       </Head>
 
       <Header />
+      
 
       {loading && <div>Loading...</div>}
       {error && <div>Error: {error}</div>} {/* Update error rendering */}
