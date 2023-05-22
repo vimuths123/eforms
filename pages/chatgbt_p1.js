@@ -5,40 +5,60 @@ import React, { useEffect, useRef, useState } from 'react'
 import Header from '../components/header';
 import Image from 'next/image';
 
-import { connect } from 'react-redux';
-import { setInputValue, fetchResult } from '../redux/store';
-import { useLocalStorage } from '../hooks/useLocalStorage'
-import { useClientLocalStorage } from '../hooks/useClientLocalStorage'
 import Question from '../components/question';
 import Answer from '../components/answer';
 
 const ChatgbtP1 = ({ }) => {
 
-  const [form, setForm] = useState({});
   const [result, setResult] = useState({});
   const [inputValue, setInputValue] = useState('')
+  const [answers, setAnswers] = useState([]);
+  const [qcountstate, setQcountstate] = useState(0);
+  
 
   const textareaRef = useRef(null);
 
   useEffect(() => {
-    setInputValue(localStorage.getItem('inputValue').replace(/^"(.*)"$/, '$1'))
+    setInputValue(localStorage.getItem('inputValue'))
     const storedData = localStorage.getItem('questrionArr');
+    const storedArray = JSON.parse(localStorage.getItem('answers'));
+
+    var qcount = localStorage.getItem('qcount');
+    if (qcount) {
+      setQcountstate(qcount)
+    }
+
     if (storedData) {
       const parsedData = JSON.parse(storedData);
       setResult(parsedData.completion);
-    }
 
+      if (storedArray && storedArray.length) {
+        setAnswers(storedArray)
+        if(parsedData.completion && parsedData.completion.length){
+          storedArray.map((item, index) => {
+            handleAppendComponent('answer', storedArray[index])
+            handleAppendComponent('question', parsedData.completion[index + 1])
+          });
+        }
+      }
+    }
     
   }, [])
 
 
-  // const [count, setCount] = useState(0)
+  useEffect(() => {
+    if (answers && answers.length) {
+      localStorage.setItem('answers', JSON.stringify(answers));
+      const storedArray2 = JSON.parse(localStorage.getItem('answers'));
+    }
+  }, [answers]);
 
   const submitAnswer = () => {
 
     // Add answer to chat
     const answer = textareaRef.current.value;
     handleAppendComponent('answer', answer)
+    setAnswers(prevAnswers => [...prevAnswers, answer]);
     textareaRef.current.value = '';
 
     // Add question to chat
@@ -46,6 +66,7 @@ const ChatgbtP1 = ({ }) => {
     if (qcount) {
       handleAppendComponent('question', result[++qcount])
       localStorage.setItem('qcount', qcount);
+      setQcountstate(qcount)
       console.log(qcount)
     }
     // if (result) {
@@ -62,18 +83,16 @@ const ChatgbtP1 = ({ }) => {
   const [appendedComponents, setAppendedComponents] = useState([]);
 
   const handleAppendComponent = (type, content) => {
-    if(type == 'question'){
-      var componentToAppend = <Question text={content}/>;
+    if (type == 'question') {
+      var componentToAppend = <Question text={content} />;
     }
 
-    if(type == 'answer'){
-      var componentToAppend = <Answer text={content}/>;
+    if (type == 'answer') {
+      var componentToAppend = <Answer text={content} />;
     }
-    
+
     setAppendedComponents(prevComponents => [...prevComponents, componentToAppend]);
   };
-
-  // console.log(result.completion.count())
 
   return (
 
@@ -85,20 +104,16 @@ const ChatgbtP1 = ({ }) => {
 
       <Header />
 
-      {/* <button onClick={() => handleAppendComponent('question', 'question')}>Append question</button>
-      <button onClick={() => handleAppendComponent('answer', 'answer')}>Append answer</button> */}
-
       <div className="container max991">
         <div className="text-center mt-5">
-          {/* <h3 className="lh-lg">Create: {inputValue}</h3> */}
           <h3 className="lh-lg">
-            <span dangerouslySetInnerHTML={{ __html: inputValue }} />
+            {inputValue}
           </h3>
           <p className="lh-lg mb-3">
             We’re going to ask you a series of step by step questions to build
             your agreement.
           </p>
-          <p className="lh-lg mb-3">1 of {(result && result.length) ? result.length : ''} questions answered
+          <p className="lh-lg mb-3">{qcountstate} of {(result && result.length) ? result.length : ''} questions answered
           </p>
         </div>
         <div className="row">
@@ -125,24 +140,10 @@ const ChatgbtP1 = ({ }) => {
                       </div>
                     </div>
                   </div>
-                  {/* <div className="middle-content-box-section-1 mt-2 p-3 rounded-3">
-                    <div className="row">
-                      <div className="col-1">
-                        <Image src="/images/you.png" alt="My Image" width={30}
-                          height={30} />
-                      </div>
-                      <div className="col-11">
-                        <p className="text-start">
-                          The name of the landlord is John Smith.
-                        </p>
-                      </div>
-                    </div>
-                  </div> */}
 
                   {appendedComponents.map((component, index) => (
                     <div key={index}>{component}</div>
                   ))}
-
 
                   <div className="middle-content-box-3 bottom-0 position-absolute tempmargin">
                     <div className='position-relative'>

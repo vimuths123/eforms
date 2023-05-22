@@ -32,6 +32,7 @@ const Home = ({ inputValue, setInputValue, fetchResult, result, loading, error }
     if (result) {
       localStorage.setItem('questrionArr', JSON.stringify(result));
       localStorage.setItem('qcount', 0);
+      localStorage.setItem('answers', JSON.stringify([]));
       
       router.push('/chatgbt_p1');
     }
