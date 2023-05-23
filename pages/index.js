@@ -13,7 +13,6 @@ import react from 'react';
 import { useRouter } from 'next/router';
 import { connect } from 'react-redux';
 import { setInputValue, fetchResult } from '../redux/store';
-import { setLocalStorage } from '../hooks/setLocalStorage'
 // 
 
 
@@ -27,7 +26,6 @@ const Home = ({ inputValue, setInputValue, fetchResult, result, loading, error }
   }, [questionCount])
 
 
-  // const setItems = setLocalStorage('questrionArr');
   useEffect(() => {
     if (result) {
       localStorage.setItem('questrionArr', JSON.stringify(result));
@@ -45,7 +43,6 @@ const Home = ({ inputValue, setInputValue, fetchResult, result, loading, error }
     setInputValue(event.target.value);
   };
 
-  // const setItems2 = setLocalStorage('inputValue');
 
   const handleBeginClick = () => {
     // console.log(inputQuestion);
