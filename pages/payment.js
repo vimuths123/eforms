@@ -1,15 +1,51 @@
+import React from "react";
+import { loadStripe } from "@stripe/stripe-js";
+import { Elements } from "@stripe/react-stripe-js";
 import Head from 'next/head';
 
 
-import React from 'react'
 import Header from '../components/header';
-import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
-import { faSearch } from '@fortawesome/free-solid-svg-icons';
 import Image from 'next/image';
-import { faAngleRight } from '@fortawesome/free-solid-svg-icons';
-import HomeFooter from '../components/homefooter';
 
-const Payment = () => {
+import CheckoutForm from "../components/CheckoutForm";
+
+// Make sure to call loadStripe outside of a component’s render to avoid
+// recreating the Stripe object on every render.
+// This is your test publishable API key.
+const stripePromise = loadStripe(process.env.NEXT_PUBLIC_STRIPE_PUBLISHABLE_KEY);
+
+export default function Payment() {
+    const [clientSecret, setClientSecret] = React.useState("");
+
+    React.useEffect(() => {
+        // Create PaymentIntent as soon as the page loads
+        fetch("/api/create-payment-intent", {
+            method: "POST",
+            headers: { "Content-Type": "application/json" },
+            body: JSON.stringify({ items: [{ id: "xl-tshirt" }] }),
+        })
+            .then((res) => res.json())
+            .then((data) => setClientSecret(data.clientSecret));
+    }, []);
+
+    const appearance = {
+        theme: 'stripe',
+        variables: {
+            // colorText: '#e0e0e0',
+            // See all possible variables below
+          },
+          rules: {
+            '.Label': {
+                color: 'white',
+                marginTop: '10px'
+            },
+          }
+    };
+    const options = {
+        clientSecret,
+        appearance,
+    };
+
     return (
         <div className='background_grey'>
             <Head>
@@ -21,7 +57,7 @@ const Payment = () => {
 
             <div className="container max991">
                 <div className="row">
-                    <div className="col text-center">
+                    <div className="col text-center mb-5">
                         <h2 className='text-white my-5'>Payment</h2>
 
                         <div className="row row-cols-1 row-cols-md-12 g-4 g-lg-4">
@@ -38,7 +74,7 @@ const Payment = () => {
                             </div>
                             <div className="col-md-7">
                                 <div className="dark_gray text-white p-4 rounded">
-                                    <form className='mb-3'>
+                                    {/* <form className='mb-3'>
                                         <div className="form-group text-start mb-3">
                                             <label htmlFor="name">Name</label>
                                             <input type="text" className="form-control form-control-lg" id="name" />
@@ -66,7 +102,13 @@ const Payment = () => {
                                             </div>
                                         </div>
                                         <button className="btn signinbtn btn-md btn-block btn-lg" type="submit">Subscribe</button>
-                                    </form>
+                                    </form> */}
+                                    {clientSecret && (
+                                        <Elements options={options} stripe={stripePromise}>
+                                            <CheckoutForm />
+                                        </Elements>
+                                    )}
+                                    <div className="mt-4"></div>
                                     <small className='text-center'>
                                         By confirming your subscription, you allow Forms.ai to charge your card
                                         for this payment and future payments in accordance with their terms. You
@@ -84,7 +126,5 @@ const Payment = () => {
             </div>
 
         </div>
-    )
+    );
 }
-
-export default Payment
