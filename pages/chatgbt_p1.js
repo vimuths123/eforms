@@ -81,7 +81,7 @@ const ChatgbtP1 = ({ }) => {
 
   const sendForm = async (formData) => {
     try {
-      const response = await fetch('https://3rpl3gq976.execute-api.us-east-1.amazonaws.com/api/form', {
+      const response = await fetch(process.env.NEXT_PUBLIC_API_URL+'api/form', {
         method: 'POST',
         body: JSON.stringify(formData),
         headers: {

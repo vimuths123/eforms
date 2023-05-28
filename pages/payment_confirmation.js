@@ -1,9 +1,33 @@
 import Head from 'next/head'
-import React from 'react'
+import React, { useEffect } from 'react'
 import Header from '../components/header'
 import Image from 'next/image'
+import { useRouter } from 'next/router'
 
 const PaymentConfirmation = () => {
+
+    const router = useRouter();
+
+    useEffect(() => {
+        var inputValue = localStorage.getItem('inputValue');
+        
+
+        const redirectTimeout = setTimeout(() => {
+            if(inputValue){
+                router.push('/chatgbt_p1'); 
+            }else{
+                router.push('/'); 
+            }
+            
+        }, 0.5 * 60 * 1000); // 30 seconds in milliseconds
+
+        // return () => {
+        //     clearTimeout(redirectTimeout);
+        // };
+    }, []);
+
+
+
     return (
         <div className='background_grey'>
             <Head>

@@ -37,7 +37,7 @@ const inputSlice = createSlice({
 
 const fetchResult = createAsyncThunk('input/fetchResult', async (inputValue) => {
     try {
-        const response = await fetch('https://3rpl3gq976.execute-api.us-east-1.amazonaws.com/api/generate/input', {
+        const response = await fetch(process.env.NEXT_PUBLIC_API_URL+'api/generate/input', {
             method: 'POST',
             body: JSON.stringify({
                 "prompt": inputValue
