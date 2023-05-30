@@ -3,9 +3,10 @@ import React, { useState } from 'react'
 import Header from '../components/header'
 import { useRouter } from 'next/router';
 
+
 const SignIn = () => {
 
-    const [password, setPassword] = useState('');
+    const [token, setToken] = useState('');
     const [email, setEmail] = useState('');
     const [errorMessage, setErrorMessage] = useState('');
     const router = useRouter();
@@ -13,8 +14,8 @@ const SignIn = () => {
     const handleSubmit = async (e) => {
         e.preventDefault();
         const data = {
-            "username": email,
-            password,
+            "email": email,
+            token,
         };
 
         const response = await fetch('https://l8bzcyhc56.execute-api.us-east-1.amazonaws.com/api/signin', {
@@ -75,8 +76,8 @@ const SignIn = () => {
                                                 <input type="password" id="typePasswordX-2"
                                                     placeholder='password'
                                                     className="form-control form-control-md"
-                                                    value={password}
-                                                    onChange={(e) => setPassword(e.target.value)} />
+                                                    value={token}
+                                                    onChange={(e) => setToken(e.target.value)} />
                                             </div>
                                             <div className='mb-5 text-start text-danger'>
                                                 {errorMessage && <span>{errorMessage}</span>}

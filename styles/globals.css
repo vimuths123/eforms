@@ -472,8 +472,13 @@ button {
 }
 
 @keyframes spin {
-  0% { transform: rotate(0deg); }
-  100% { transform: rotate(360deg); }
+  0% {
+    transform: rotate(0deg);
+  }
+
+  100% {
+    transform: rotate(360deg);
+  }
 }
 
 /* stripe */
@@ -574,6 +579,7 @@ button:disabled {
     -webkit-transform: rotate(0deg);
     transform: rotate(0deg);
   }
+
   100% {
     -webkit-transform: rotate(360deg);
     transform: rotate(360deg);
@@ -603,17 +609,48 @@ button:disabled {
   animation: spin 1s linear infinite;
 }
 
-.Label{
+.Label {
   color: white !important;
 }
 
 /* Customize the label color for PaymentElement */
 .StripeElement {
-  color: #000000; /* Set your desired label color */
+  color: #000000;
+  /* Set your desired label color */
 }
 
 /* Customize the label color for LinkAuthenticationElement */
 .StripeElement--linkAuthentication {
-  color: #ff0000; /* Set your desired label color */
+  color: #ff0000;
+  /* Set your desired label color */
 }
+
 /* Stripe */
+
+
+.sign-in-form {
+  width: 100%;
+  height: 100vh;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+}
+
+.sign-in-form input {
+  display: block;
+  padding: 5px;
+  border: 1px gray solid;
+  border-radius: 3px;
+  margin-top: 15px;
+}
+
+.sign-in-form h1 {
+  font-size: 18px;
+  text-align: center;
+}
+
+.sign-in-form form {
+  padding: 50px 15px;
+  border: 2px gray solid;
+  border-radius: 3px;
+}
