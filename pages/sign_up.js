@@ -37,7 +37,7 @@ const SignUp = () => {
             });
 
             if (response.ok) {
-                router.push('/sign_in');
+                router.push('/verification_process');
             }else{
                 setErrorMessage('Error happond please contact admin');
             }
