@@ -6,7 +6,7 @@ import { useRouter } from 'next/router';
 
 const SignIn = () => {
 
-    const [token, setToken] = useState('');
+    const [password, setPassword] = useState('');
     const [email, setEmail] = useState('');
     const [errorMessage, setErrorMessage] = useState('');
     const router = useRouter();
@@ -15,10 +15,10 @@ const SignIn = () => {
         e.preventDefault();
         const data = {
             "email": email,
-            token,
+            password,
         };
 
-        const response = await fetch('https://l8bzcyhc56.execute-api.us-east-1.amazonaws.com/api/signin', {
+        const response = await fetch(process.env.NEXT_PUBLIC_API_URL+'api/signin', {
             method: 'POST',
             headers: {
                 'Content-Type': 'application/json',
@@ -30,7 +30,11 @@ const SignIn = () => {
 
             // Handle the response based on the status code
             if (statusCode === 200) {
-                router.push('/');
+                (async () => {
+                    const data = await response.json();
+                    const user = data.userData;
+                    sessionStorage.setItem('user', JSON.stringify(user));})();
+                router.push('/?logged=true');
             } else if (statusCode === 401) {
                 setErrorMessage('Invalid username or password');
             } else {
@@ -76,8 +80,8 @@ const SignIn = () => {
                                                 <input type="password" id="typePasswordX-2"
                                                     placeholder='password'
                                                     className="form-control form-control-md"
-                                                    value={token}
-                                                    onChange={(e) => setToken(e.target.value)} />
+                                                    value={password}
+                                                    onChange={(e) => setPassword(e.target.value)} />
                                             </div>
                                             <div className='mb-5 text-start text-danger'>
                                                 {errorMessage && <span>{errorMessage}</span>}

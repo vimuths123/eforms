@@ -28,7 +28,7 @@ const SignUp = () => {
                 password,
             };
 
-            const response = await fetch('https://l8bzcyhc56.execute-api.us-east-1.amazonaws.com/api/signup', {
+            const response = await fetch(process.env.NEXT_PUBLIC_API_URL+'api/signup', {
                 method: 'POST',
                 headers: {
                     'Content-Type': 'application/json',
@@ -37,7 +37,7 @@ const SignUp = () => {
             });
 
             if (response.ok) {
-                router.push('/verification_process');
+                router.push('/verification_process?email='+email);
             }else{
                 setErrorMessage('Error happond please contact admin');
             }

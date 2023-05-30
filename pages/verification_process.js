@@ -1,8 +1,23 @@
 import Head from 'next/head';
-import React from 'react'
+import React, { useEffect, useState } from 'react'
 import Header from '../components/header';
+import { useRouter } from 'next/router';
+
 
 const VerificationProcess = () => {
+    const router = useRouter();
+    const { query } = router;
+    const emailParam = query.email;
+
+    const [email, setEmail] = useState('');
+
+    useEffect(() => {
+        if (emailParam) {
+            setEmail(emailParam);
+        }
+    }, [emailParam]);
+
+
     return (
         <div className='background_grey'>
             <Head>
@@ -21,7 +36,7 @@ const VerificationProcess = () => {
                                     <div className="card-body px-5 py-4 text-center">
 
                                         <h3 className="mb-4">Verification Required</h3>
-                                        <p>We have sent you a verification email to [EMAIL].</p>
+                                        <p>We have sent you a verification email to {email}.</p>
                                         <div className='mt-2'></div>
                                         <p>Please click the link in the email to complete the
                                             sign up process. </p>

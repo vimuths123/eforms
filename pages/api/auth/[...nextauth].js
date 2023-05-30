@@ -43,9 +43,9 @@ export const authOptions = {
                     return response;
                 });
 
-                if (email !== "john@gmail.com" || password !== "1234") {
-                    throw new Error("invalid credentials");
-                }
+                // if (email !== "john@gmail.com" || password !== "1234") {
+                //     throw new Error("invalid credentials");
+                // }
 
                 // if everything is fine
                 return {

@@ -1,4 +1,4 @@
-import React from "react";
+import React, { useEffect } from "react";
 import { loadStripe } from "@stripe/stripe-js";
 import { Elements } from "@stripe/react-stripe-js";
 import Head from 'next/head';
@@ -8,6 +8,7 @@ import Header from '../components/header';
 import Image from 'next/image';
 
 import CheckoutForm from "../components/CheckoutForm";
+import { useRouter } from "next/router";
 
 // Make sure to call loadStripe outside of a component’s render to avoid
 // recreating the Stripe object on every render.
@@ -15,6 +16,17 @@ import CheckoutForm from "../components/CheckoutForm";
 const stripePromise = loadStripe(process.env.NEXT_PUBLIC_STRIPE_PUBLISHABLE_KEY);
 
 export default function Payment() {
+
+    const router = useRouter();
+
+    useEffect(() => {
+        const user = sessionStorage.getItem('user');
+
+        if (!user) {
+            router.push('/');
+        }
+    }, []);
+
     const [clientSecret, setClientSecret] = React.useState("");
 
     React.useEffect(() => {
@@ -33,13 +45,13 @@ export default function Payment() {
         variables: {
             // colorText: '#e0e0e0',
             // See all possible variables below
-          },
-          rules: {
+        },
+        rules: {
             '.Label': {
                 color: 'white',
                 marginTop: '10px'
             },
-          }
+        }
     };
     const options = {
         clientSecret,

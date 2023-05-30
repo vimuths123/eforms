@@ -18,11 +18,15 @@ import { setInputValue, fetchResult } from '../redux/store';
 
 const Home = ({ inputValue, setInputValue, fetchResult, result, loading, error }) => {
   const [inputQuestion, setInputQuestion] = useState('');
-  const router = useRouter();
+
   const [questionCount, setQuestionCount] = useState(0);
 
-  useEffect(() => {
+  const router = useRouter();
+  
 
+
+  useEffect(() => {
+    
   }, [questionCount])
 
 
@@ -31,7 +35,7 @@ const Home = ({ inputValue, setInputValue, fetchResult, result, loading, error }
       localStorage.setItem('questrionArr', JSON.stringify(result));
       localStorage.setItem('qcount', 0);
       localStorage.setItem('answers', JSON.stringify([]));
-      
+
       router.push('/chatgbt_p1');
     }
   }, [result])
@@ -58,7 +62,7 @@ const Home = ({ inputValue, setInputValue, fetchResult, result, loading, error }
     });
   };
 
-  
+
 
   return (
     <div className='background_grey'>
@@ -68,7 +72,7 @@ const Home = ({ inputValue, setInputValue, fetchResult, result, loading, error }
       </Head>
 
       <Header />
-      
+
 
       {loading && <div>Loading...</div>}
       {error && <div>Error: {error}</div>} {/* Update error rendering */}

@@ -3,6 +3,9 @@ import "../styles/globals.css";
 import { useEffect } from "react";
 import { Provider } from 'react-redux';
 import store from '../redux/store';
+import 'react-toastify/dist/ReactToastify.css';
+import { ToastContainer, toast } from 'react-toastify';
+
 
 function MyApp({ Component, pageProps }) {
     useEffect(() => {
@@ -11,6 +14,7 @@ function MyApp({ Component, pageProps }) {
 
     return (
         <Provider store={store}>
+            <ToastContainer />
             <Component {...pageProps} />
         </Provider>
     );
