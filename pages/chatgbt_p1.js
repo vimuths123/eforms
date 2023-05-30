@@ -93,6 +93,10 @@ const ChatgbtP1 = ({ }) => {
         throw new Error(`HTTP error! Status: ${response.status}`);
       }
 
+      if(response.ok){
+        router.push('/verification_process?email='+email);
+      }
+
       const data = await response.json();
       console.log(data)
     } catch (error) {

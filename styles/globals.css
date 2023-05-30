@@ -662,3 +662,11 @@ button:disabled {
 .header-login:hover{
   cursor: pointer;
 }
+
+.w-200{
+  width: 200px;
+}
+
+.w-800{
+  width: 800px;
+}
