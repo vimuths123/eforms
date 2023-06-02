@@ -23,7 +23,18 @@ const Home = ({ inputValue, setInputValue, fetchResult, result, loading, error }
 
   const router = useRouter();
   
-
+  useEffect(() => {
+    const { question } = router.query;
+    if (question) {
+      localStorage.setItem('inputValue', question);
+      setInputQuestion(question)
+      fetchResult(question).then(() => {
+        if (!error && !loading) {
+  
+        }
+      });
+    }
+  }, [router.query]);
 
   useEffect(() => {
     

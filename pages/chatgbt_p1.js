@@ -94,7 +94,7 @@ const ChatgbtP1 = ({ }) => {
       }
 
       if(response.ok){
-        router.push('/verification_process?email='+email);
+        router.push('/document_preview');
       }
 
       const data = await response.json();
