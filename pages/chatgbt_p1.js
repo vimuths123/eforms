@@ -7,6 +7,7 @@ import Image from 'next/image';
 
 import Question from '../components/question';
 import Answer from '../components/answer';
+import { useRouter } from 'next/router';
 
 const ChatgbtP1 = ({ }) => {
 
@@ -15,6 +16,8 @@ const ChatgbtP1 = ({ }) => {
   const [answers, setAnswers] = useState([]);
   const [qcountstate, setQcountstate] = useState(0);
   const [isLoad, setIsload] = useState(false);
+
+  const router = useRouter();
 
 
   const textareaRef = useRef(null);
