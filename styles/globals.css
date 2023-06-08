@@ -670,3 +670,47 @@ button:disabled {
 .w-800{
   width: 800px;
 }
+
+.custom-bg {
+  background-color: #2A2A36;
+  border-radius: 10px;
+  padding: 20px;
+}
+
+.topic {
+  font-weight: bold;
+  text-align: center;
+  color: black;
+}
+
+.question {
+  font-weight: bold;
+  color: black;
+}
+
+.answer {
+  color: black;
+}
+
+.wrapper {
+  background-color: #2A2A36;
+  padding: 20px;
+  border-radius: 4px;
+}
+
+.esign {
+  position: absolute;
+  bottom: 20px;
+  left: 4rem;
+  font-size: 17px;
+  color: black;
+  font-weight: bold;
+}
+
+.page-number {
+  position: absolute;
+  bottom: 20px;
+  right: 4rem;
+  font-size: 16px;
+  color: black;
+}
