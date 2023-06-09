@@ -18,7 +18,7 @@ const SignIn = () => {
             password,
         };
 
-        const response = await fetch(process.env.NEXT_PUBLIC_API_URL+'api/signin', {
+        const response = await fetch(process.env.NEXT_PUBLIC_API_URL + 'api/signin', {
             method: 'POST',
             headers: {
                 'Content-Type': 'application/json',
@@ -33,8 +33,20 @@ const SignIn = () => {
                 (async () => {
                     const data = await response.json();
                     const user = data.userData;
-                    sessionStorage.setItem('user', JSON.stringify(user));})();
-                router.push('/?logged=true');
+                    sessionStorage.setItem('user', JSON.stringify(user));
+                })();
+
+                const topic = localStorage.getItem('inputValue');
+                const storedData = localStorage.getItem('questrionArr');
+                const storedArray = JSON.parse(localStorage.getItem('answers'));
+
+                if (storedData && storedArray && storedArray.length) {
+                    router.push('/document_preview?logged=true');
+                }else{
+                    router.push('/?logged=true');
+                }
+
+                
             } else if (statusCode === 401) {
                 setErrorMessage('Invalid username or password');
             } else {

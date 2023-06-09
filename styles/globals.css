@@ -655,19 +655,19 @@ button:disabled {
   border-radius: 3px;
 }
 
-.Toastify__close-button{
+.Toastify__close-button {
   width: auto !important;
 }
 
-.header-login:hover{
+.header-login:hover {
   cursor: pointer;
 }
 
-.w-200{
+.w-200 {
   width: 200px;
 }
 
-.w-800{
+.w-800 {
   width: 800px;
 }
 
@@ -681,6 +681,13 @@ button:disabled {
   font-weight: bold;
   text-align: center;
   color: black;
+  text-decoration: underline;
+}
+
+.last_answer {
+  border-bottom: 1px solid black;
+  /* padding-bottom: 20px; */
+  margin-bottom: 15px
 }
 
 .question {
@@ -700,7 +707,7 @@ button:disabled {
 
 .esign {
   position: absolute;
-  bottom: 20px;
+  bottom: 25px;
   left: 4rem;
   font-size: 17px;
   color: black;
@@ -709,8 +716,13 @@ button:disabled {
 
 .page-number {
   position: absolute;
-  bottom: 20px;
+  bottom: 25px;
   right: 4rem;
   font-size: 16px;
   color: black;
+}
+
+.border-around {
+  padding: 20px;
+  border: 1px solid black;
 }
