@@ -137,8 +137,8 @@ const documentPreview = () => {
                     )
                   ))
                 }
-                <p class="esign">eSign</p>
-                <p class="page-number">Page 1</p>
+                <p className="esign">eSign</p>
+                <p className="page-number">Page 1</p>
                 {/* <p className="question mb-1">Question 1:</p>
               <p className="answer mb-3">Answer 1</p>
               <p className="question mb-1">Question 2:</p>

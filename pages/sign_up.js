@@ -22,13 +22,13 @@ const SignUp = () => {
         }
 
         try {
-            
+
             const data = {
                 "username": email,
                 password,
             };
 
-            const response = await fetch(process.env.NEXT_PUBLIC_API_URL+'api/signup', {
+            const response = await fetch(process.env.NEXT_PUBLIC_API_URL + 'api/signup', {
                 method: 'POST',
                 headers: {
                     'Content-Type': 'application/json',
@@ -36,14 +36,18 @@ const SignUp = () => {
                 body: JSON.stringify(data),
             });
 
+            
             if (response.ok) {
-                router.push('/verification_process?email='+email);
-            }else{
-                setErrorMessage('Error happond please contact admin');
+                router.push('/verification_process?email=' + email);
+            } else if (response.status === 409) {
+                setErrorMessage('User already exists');
+            } else {
+                setErrorMessage('Error happend please contact admin');
             }
         } catch (error) {
             console.log(error)
-            setErrorMessage('Error happond please contact admin');
+            alert('dsd')
+            setErrorMessage('Error happend please contact admin');
         }
 
     }

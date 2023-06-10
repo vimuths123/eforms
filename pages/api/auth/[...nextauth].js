@@ -36,7 +36,7 @@ export const authOptions = {
                     } else if (statusCode === 401) {
                         // setErrorMessage('Invalid username or password');
                     } else {
-                        // setErrorMessage('Error happond please contact admin');
+                        // setErrorMessage('Error happend please contact admin');
                     }
         
                     // Return the response

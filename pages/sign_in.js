@@ -33,24 +33,27 @@ const SignIn = () => {
                 (async () => {
                     const data = await response.json();
                     const user = data.userData;
-                    sessionStorage.setItem('user', JSON.stringify(user));
+                    await sessionStorage.setItem('user', JSON.stringify(user));
+                    const userd = sessionStorage.getItem('user');
+                    if (userd) {
+                        console.log('login'+userd)
+                    }
                 })();
 
-                const topic = localStorage.getItem('inputValue');
                 const storedData = localStorage.getItem('questrionArr');
                 const storedArray = JSON.parse(localStorage.getItem('answers'));
 
                 if (storedData && storedArray && storedArray.length) {
                     router.push('/document_preview?logged=true');
-                }else{
+                } else {
                     router.push('/?logged=true');
                 }
 
-                
+
             } else if (statusCode === 401) {
                 setErrorMessage('Invalid username or password');
             } else {
-                setErrorMessage('Error happond please contact admin');
+                setErrorMessage('Error happend please contact admin');
             }
 
             // Return the response
