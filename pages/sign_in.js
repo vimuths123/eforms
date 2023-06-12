@@ -24,43 +24,27 @@ const SignIn = () => {
                 'Content-Type': 'application/json',
             },
             body: JSON.stringify(data),
-        }).then((response) => {
-            // Get the status code
-            const statusCode = response.status;
-
-            // Handle the response based on the status code
-            if (statusCode === 200) {
-                (async () => {
-                    const data = await response.json();
-                    const user = data.userData;
-                    await sessionStorage.setItem('user', JSON.stringify(user));
-                    const userd = sessionStorage.getItem('user');
-                    if (userd) {
-                        console.log('login'+userd)
-                    }
-                })();
-
-                const storedData = localStorage.getItem('questrionArr');
-                const storedArray = JSON.parse(localStorage.getItem('answers'));
-
-                if (storedData && storedArray && storedArray.length) {
-                    router.push('/document_preview?logged=true');
-                } else {
-                    router.push('/?logged=true');
-                }
-
-
-            } else if (statusCode === 401) {
-                setErrorMessage('Invalid username or password');
-            } else {
-                setErrorMessage('Error happend please contact admin');
-            }
-
-            // Return the response
-            return response;
         });
 
+        const statusCode = response.status;
+        if (statusCode === 200) {
+            const data = await response.json();
+            const user = data.userData;
+            sessionStorage.setItem('user', JSON.stringify(user));
 
+            const storedData = localStorage.getItem('questrionArr');
+            const storedArray = JSON.parse(localStorage.getItem('answers'));
+
+            if (storedData && storedArray && storedArray.length) {
+                router.push('/document_preview?logged=true');
+            } else {
+                router.push('/?logged=true');
+            }
+        } else if (statusCode === 401) {
+            setErrorMessage('Invalid username or password');
+        } else {
+            setErrorMessage('Error happened, please contact admin');
+        }
     }
 
     return (
