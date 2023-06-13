@@ -162,6 +162,12 @@ const ChatgbtP1 = ({ }) => {
     }
   }
 
+  const handleKeyDown = (event) => {
+    if (event.key === 'Enter') {
+      submitAnswer()
+    }
+  };
+
 
 
   const handleAppendComponent = (type, content) => {
@@ -276,6 +282,7 @@ const ChatgbtP1 = ({ }) => {
                               placeholder="Please type your annswer"
                               id="floatingTextarea"
                               ref={textareaRef}
+                              onKeyDown={handleKeyDown}
                             >
                               {/* Please type your annswer */}
                             </textarea>
