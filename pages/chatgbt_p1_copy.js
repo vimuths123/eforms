@@ -37,14 +37,17 @@ const ChatgbtP1 = ({ }) => {
 
     if (storedData) {
       const parsedData = JSON.parse(storedData);
-      setResult(parsedData.completion);
+      setResult(parsedData.data);
+      console.log(parsedData.data)
+
+      console.log(Object.keys(parsedData.data).length);
 
       if (storedArray && storedArray.length) {
         setAnswers(storedArray)
-        if (parsedData.completion && parsedData.completion.length) {
+        if (parsedData.data && parsedData.data.length) {
           storedArray.map((item, index) => {
             handleAppendComponent('answer', storedArray[index])
-            handleAppendComponent('question', parsedData.completion[index + 1])
+            handleAppendComponent('question', parsedData.data[index + 1])
           });
         }
       }
@@ -69,23 +72,9 @@ const ChatgbtP1 = ({ }) => {
     const data = await response.json();
 
     if (data) {
-
-
-      const completion = Object.keys(data.data).map(key => data.data[key]);
-      const result = { Id: data.Id, completion };
-      console.log(result)
-
-      const qkeys = Object.keys(data.data);
-
-      // const completion = Object.keys(data.data).map(key => data.data[key]);
-      // const resultt = { Id: data.Id, completion };
-
-      // console.log(resultt);
-
-      localStorage.setItem('questrionArr', JSON.stringify(result));
+      localStorage.setItem('questrionArr', JSON.stringify(data));
       localStorage.setItem('qcount', 0);
       localStorage.setItem('answers', JSON.stringify([]));
-      localStorage.setItem('qkeys', JSON.stringify(qkeys));
       setLoadQuestions(false)
       setAppendedComponents([])
       setInitialValues()
@@ -111,34 +100,21 @@ const ChatgbtP1 = ({ }) => {
       // console.log(storedArray2)
 
       // Sending to second form
-      var qamount = (result && result.length) ? result.length : 0;
+      var qamount = (result && Object.keys(result).length) ? Object.keys(result).length : 0;
       if (storedArray2.length >= qamount) {
         setIsload(true)
-        var qa = {};
-        // var form = {
-        //   "form_name": inputValue,
-        // }
-
-        var storedData = localStorage.getItem('questrionArr');
-        var qkeys = JSON.parse(localStorage.getItem('qkeys'));
-        storedData = JSON.parse(storedData);
-        var id = storedData.Id;
-        console.log(id)
-
-        if (qamount && id) {
-
-          var form = {
-            "Id": id,
-          }
-
+        var qa = [];
+        var form = {
+          "form_name": inputValue,
+        }
+        if (qamount) {
           for (let i = 0; i < qamount; i++) {
-            // var tempArr = {
-            //   "question": result[i],
-            //   "answer": answers[i]
-            // }
+            var tempArr = {
+              "question": result[i],
+              "answer": answers[i]
+            }
 
-            // qa = [...qa, tempArr];
-            qa[qkeys[i]] = answers[i]
+            qa = [...qa, tempArr];
           }
           form.qa = qa;
           sendForm(form)
@@ -158,20 +134,16 @@ const ChatgbtP1 = ({ }) => {
         },
       });
 
-      const rdata = await response.json();
-
       if (!response.ok) {
         throw new Error(`HTTP error! Status: ${response.status}`);
       }
 
       if (response.ok) {
-        // console.log(rdata)
-        localStorage.setItem('formdata', JSON.stringify(rdata));
         router.push('/document_preview');
       }
 
-      // const data = await response.json();
-      // console.log(data)
+      const data = await response.json();
+      console.log(data)
     } catch (error) {
       console.error('Error:', error);
     }
@@ -260,7 +232,7 @@ const ChatgbtP1 = ({ }) => {
                 We’re going to ask you a series of step by step questions to build
                 your agreement.
               </p>
-              <p className="lh-lg mb-3">{qcountstate} of {(result && result.length) ? result.length : ''} questions answered
+              <p className="lh-lg mb-3">{qcountstate} of {(result && Object.keys(result).length) ? Object.keys(result).length : ''} questions answered
               </p>
             </div>
             <div className="row">
@@ -291,7 +263,7 @@ const ChatgbtP1 = ({ }) => {
                                   Please provide accurate and detailed information as you respond
                                   to the questions. Once we have collected all the necessary
                                   information, I'll help you create the lease agreement. Let's
-                                  start with the first question. {(result && result.length) ? result[0] : ''}?
+                                  start with the first question. {(result && Object.keys(result).length) ? Object.values(result)[0] : ''}
                                 </p>
                               </div>
                             </div>
@@ -341,6 +313,4 @@ const ChatgbtP1 = ({ }) => {
 };
 
 export default ChatgbtP1;
-
-
 
