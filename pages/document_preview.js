@@ -59,26 +59,26 @@ const documentPreview = () => {
 
     const textContent = JSON.parse(localStorage.getItem('formdata'));
 
-const textOptions = {
-  maxWidth: 180, // Maximum width of the text
-};
+    const textOptions = {
+      maxWidth: 180, // Maximum width of the text
+    };
 
-const pageHeight = doc.internal.pageSize.getHeight(); // Get the height of the page
-let cursorY = 10; // Initial cursor position
+    const pageHeight = doc.internal.pageSize.getHeight(); // Get the height of the page
+    let cursorY = 10; // Initial cursor position
 
-const lines = doc.splitTextToSize(textContent, textOptions.maxWidth); // Split the text into lines
+    const lines = doc.splitTextToSize(textContent, textOptions.maxWidth); // Split the text into lines
 
-for (let i = 0; i < lines.length; i++) {
-  const line = lines[i];
+    for (let i = 0; i < lines.length; i++) {
+      const line = lines[i];
 
-  if (cursorY > pageHeight - 10) {
-    doc.addPage();
-    cursorY = 10;
-  }
+      if (cursorY > pageHeight - 10) {
+        doc.addPage();
+        cursorY = 10;
+      }
 
-  doc.text(line, 10, cursorY, textOptions);
-  cursorY += 10; // Increment cursor position by a fixed value (adjust as needed)
-}
+      doc.text(line, 10, cursorY, textOptions);
+      cursorY += 10; // Increment cursor position by a fixed value (adjust as needed)
+    }
 
 
 
@@ -87,7 +87,44 @@ for (let i = 0; i < lines.length; i++) {
     doc.save('document.pdf');
   };
 
+  const showPDF = () => {
+    const doc = new jsPDF();
+
+    const textContent = JSON.parse(localStorage.getItem('formdata'));
+
+    const contentWidth = 180;
+    const fullContent = textContent; // Assign the string directly
+    const midpoint = Math.ceil(fullContent.length / 2);
+    let halfContent = fullContent.slice(0, midpoint);
+
+    // Add ellipsis to the end of the content if needed
+    if (fullContent.length > halfContent.length) {
+      halfContent += '...';
+    }
+
+    const lines = doc.splitTextToSize(halfContent, contentWidth);
+
+    // Add the lines to the PDF document
+    doc.text(lines, 10, 10);
+
+    // Generate the data URL
+    const dataUrl = doc.output('datauristring');
+
+    // Create an <iframe> element and set the data URL as the source
+    const iframe = document.createElement('iframe');
+    iframe.src = dataUrl;
+    iframe.style.width = '100%';
+    iframe.style.height = '500px';
+
+    // Append the <iframe> element to a container in your HTML
+    const container = document.getElementById('pdfContainer');
+    container.appendChild(iframe);
+
+  }
+
   useEffect(() => {
+    showPDF();
+
     setInputValue(localStorage.getItem('inputValue'));
     const storedData = localStorage.getItem('questrionArr');
     const storedArray = JSON.parse(localStorage.getItem('answers'));
@@ -154,24 +191,7 @@ for (let i = 0; i < lines.length; i++) {
         <div className="row">
           <div className="col-12 col-md-9 custom-bg mx-auto">
             <div className="bg-white p-3 position-relative">
-              <div className="border-around">
-                <h2 className="topic mb-4">{inputValue}</h2>
-                {
-                  appendedComponents.map((component, index) => (
-                    index === appendedComponents.length - 1 ? (
-                      <div className="last_answer" key={index}>{component}</div>
-                    ) : (
-                      <div key={index}>{component}</div>
-                    )
-                  ))
-                }
-                <p className="esign">eSign</p>
-                <p className="page-number">Page 1</p>
-                {/* <p className="question mb-1">Question 1:</p>
-              <p className="answer mb-3">Answer 1</p>
-              <p className="question mb-1">Question 2:</p>
-              <p className="answer mb-3">Answer 2</p> */}
-              </div>
+              <div id="pdfContainer"></div>
             </div>
           </div>
         </div>
