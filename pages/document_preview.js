@@ -17,45 +17,8 @@ const documentPreview = () => {
     const topic = localStorage.getItem('inputValue');
     const doc = new jsPDF();
 
-    // var xOffset = doc.internal.pageSize.width / 2;
-
-    // Set the font size and style for the first text
-    // doc.setFontSize(20);
-    // doc.setFont('helvetica', 'bold');
-    // doc.text(topic, xOffset, 18, { align: 'center' });
-
-    // Set the font size and style for the second text
-    // doc.setFontSize(12);
-
-    // var height = 20;
-
     const storedData = localStorage.getItem('questrionArr');
     const storedArray = JSON.parse(localStorage.getItem('answers'));
-
-    // if (storedData) {
-    //   const parsedData = JSON.parse(storedData);
-
-    //   if (storedArray && storedArray.length) {
-    //     if (parsedData.completion && parsedData.completion.length) {
-    //       storedArray.forEach((item, index) => {
-    //         if (height > doc.internal.pageSize.height - 10) {
-    //           doc.addPage(); // Add a new page if the current height exceeds the available vertical space
-    //           height = 20; // Reset the height for the new page
-    //         }
-
-    //         height += 10;
-    //         doc.setFont('helvetica', 'bold');
-    //         doc.text(parsedData.completion[index], 10, height, { align: 'left' });
-
-    //         height += 6;
-    //         doc.setFont('helvetica', 'normal');
-    //         doc.text(storedArray[index], 10, height, { align: 'left' });
-    //       });
-    //     }
-    //   }
-    // }
-
-    // const doc = new jsPDF();
 
     const textContent = JSON.parse(localStorage.getItem('formdata'));
 
@@ -79,9 +42,6 @@ const documentPreview = () => {
       doc.text(line, 10, cursorY, textOptions);
       cursorY += 10; // Increment cursor position by a fixed value (adjust as needed)
     }
-
-
-
 
     // Save the PDF
     doc.save('document.pdf');

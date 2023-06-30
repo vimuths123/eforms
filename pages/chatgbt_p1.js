@@ -55,6 +55,7 @@ const ChatgbtP1 = ({ }) => {
     setInitialValues()
   }, [])
 
+
   async function fetchResult(question) {
     const response = await fetch(process.env.NEXT_PUBLIC_API_URL + 'api/generate/input', {
       method: 'POST',
@@ -69,23 +70,34 @@ const ChatgbtP1 = ({ }) => {
     const data = await response.json();
 
     if (data) {
-
-
       const completion = Object.keys(data.data).map(key => data.data[key]);
       const result = { Id: data.Id, completion };
-      console.log(result)
+      const content = data.chat_responst_1;
 
       const qkeys = Object.keys(data.data);
-
-      // const completion = Object.keys(data.data).map(key => data.data[key]);
-      // const resultt = { Id: data.Id, completion };
-
-      // console.log(resultt);
 
       localStorage.setItem('questrionArr', JSON.stringify(result));
       localStorage.setItem('qcount', 0);
       localStorage.setItem('answers', JSON.stringify([]));
       localStorage.setItem('qkeys', JSON.stringify(qkeys));
+
+      var messages = {
+        "messages": [
+          { "role": "system", "content": "You are a helpful assistant." },
+          { "role": "user", "content": "Create a document for " + question + " with dummy data" },
+          {
+            "role": "user",
+            "content": content
+          },
+          {
+            "role": "assistant", 
+            "content": JSON.stringify(completion)
+          }
+        ]
+      }
+
+      localStorage.setItem('messages', JSON.stringify(messages));
+
       setLoadQuestions(false)
       setAppendedComponents([])
       setInitialValues()
@@ -115,15 +127,12 @@ const ChatgbtP1 = ({ }) => {
       if (storedArray2.length >= qamount) {
         setIsload(true)
         var qa = {};
-        // var form = {
-        //   "form_name": inputValue,
-        // }
 
         var storedData = localStorage.getItem('questrionArr');
         var qkeys = JSON.parse(localStorage.getItem('qkeys'));
         storedData = JSON.parse(storedData);
         var id = storedData.Id;
-        console.log(id)
+        // console.log(id)
 
         if (qamount && id) {
 
@@ -132,12 +141,6 @@ const ChatgbtP1 = ({ }) => {
           }
 
           for (let i = 0; i < qamount; i++) {
-            // var tempArr = {
-            //   "question": result[i],
-            //   "answer": answers[i]
-            // }
-
-            // qa = [...qa, tempArr];
             qa[qkeys[i]] = answers[i]
           }
           form.qa = qa;
@@ -177,19 +180,43 @@ const ChatgbtP1 = ({ }) => {
     }
   }
 
-  const submitAnswer = () => {
+
+  const submitAnswer = async () => {
     // Add answer to chat
     const answer = textareaRef.current.value;
     handleAppendComponent('answer', answer)
-    setAnswers(prevAnswers => [...prevAnswers, answer]);
     textareaRef.current.value = '';
 
-    // Add question to chat
-    var qcount = localStorage.getItem('qcount');
-    if (qcount) {
-      handleAppendComponent('question', result[++qcount])
-      localStorage.setItem('qcount', qcount);
-      setQcountstate(qcount)
+    if (answer.endsWith("?")) {
+      var messages = JSON.parse(localStorage.getItem('messages'));
+      
+      messages.messages.push({ "role": "user", "content": answer });
+      var updatedMessagesString = JSON.stringify(messages);
+      localStorage.setItem('messages', updatedMessagesString);
+
+      const response = await fetch(process.env.NEXT_PUBLIC_API_URL + 'api/generate/chat', {
+        method: 'POST',
+        body: updatedMessagesString,
+        headers: {
+          'Content-Type': 'application/json',
+        },
+      });
+
+      const rdata = await response.json();
+      
+      if (response.ok) {
+        handleAppendComponent('question', rdata.chat)
+      }
+    } else {
+      setAnswers(prevAnswers => [...prevAnswers, answer]);
+
+      // Add question to chat
+      var qcount = localStorage.getItem('qcount');
+      if (qcount) {
+        handleAppendComponent('question', result[++qcount])
+        localStorage.setItem('qcount', qcount);
+        setQcountstate(qcount)
+      }
     }
   }
 
