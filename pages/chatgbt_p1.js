@@ -44,7 +44,7 @@ const ChatgbtP1 = ({ }) => {
         setAnswers(storedArray)
         if (parsedData.completion && parsedData.completion.length) {
           storedArray.map((item, index) => {
-            
+
             // userQA.map((qaitem, qaindex) => {
             //   if(index == qaindex){
             //     handleAppendComponent('answer', storedArray[index])
@@ -84,6 +84,8 @@ const ChatgbtP1 = ({ }) => {
 
       const qkeys = Object.keys(data.data);
 
+      // localStorage.clear();
+
       localStorage.setItem('questrionArr', JSON.stringify(result));
       localStorage.setItem('qcount', 0);
       localStorage.setItem('answers', JSON.stringify([]));
@@ -99,7 +101,7 @@ const ChatgbtP1 = ({ }) => {
             "content": content
           },
           {
-            "role": "assistant", 
+            "role": "assistant",
             "content": JSON.stringify(completion)
           }
         ]
@@ -197,7 +199,7 @@ const ChatgbtP1 = ({ }) => {
 
     if (answer.endsWith("?")) {
       var messages = JSON.parse(localStorage.getItem('messages'));
-      
+
       messages.messages.push({ "role": "user", "content": answer });
       var updatedMessagesString = JSON.stringify(messages);
       localStorage.setItem('messages', updatedMessagesString);
@@ -211,7 +213,7 @@ const ChatgbtP1 = ({ }) => {
       });
 
       const rdata = await response.json();
-      
+
       if (response.ok) {
         handleAppendComponent('question', rdata.chat)
 
