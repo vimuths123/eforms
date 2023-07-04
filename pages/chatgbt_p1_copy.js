@@ -46,7 +46,7 @@ const ChatgbtP1 = ({ }) => {
 
   }, [router.query]);
 
-  const setInitialValues = () => {
+  const setInitialValues = (emptychatline) => {
     setQuestionkeys(JSON.parse(localStorage.getItem('questionkeys')))
 
     var tempquestionCount = parseInt(localStorage.getItem('questionCount'), 10)
@@ -63,20 +63,25 @@ const ChatgbtP1 = ({ }) => {
     const parsedData = JSON.parse(localStorage.getItem('questions'));
     setQuestions(parsedData?.completion);
 
-    var chatline = JSON.parse(localStorage.getItem('chatLine'));
-    chatline?.forEach(line => {
-      if (line.type == 'question') {
-        handleAppendComponent('question', line.value)
-      }
+    if (!emptychatline) {
+      var chatline = JSON.parse(localStorage.getItem('chatLine'));
+      chatline?.forEach(line => {
+        if (line.type == 'question') {
+          handleAppendComponent('question', line.value)
+        }
 
-      if (line.type == 'answer') {
-        handleAppendComponent('answer', line.value)
-      }
-    });
+        if (line.type == 'answer') {
+          handleAppendComponent('answer', line.value)
+        }
+      });
+    }else{
+      setAppendedComponents([])
+    }
   }
 
   useEffect(() => {
-    setInitialValues()
+    console.log('1')
+    setInitialValues(false)
   }, [])
 
   const scrollToBottom = () => {
@@ -207,6 +212,7 @@ const ChatgbtP1 = ({ }) => {
 
     localStorage.setItem('promptQuestion', question);
 
+
     try {
       const response = await fetch(process.env.NEXT_PUBLIC_API_URL + 'api/generate/input', {
         method: 'POST',
@@ -257,7 +263,7 @@ const ChatgbtP1 = ({ }) => {
 
         localStorage.setItem('messages', JSON.stringify(messages));
 
-        setInitialValues()
+        setInitialValues(true)
       }
     } catch (error) {
       console.error('Error:', error);
